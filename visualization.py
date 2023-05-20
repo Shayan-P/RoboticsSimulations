@@ -21,6 +21,40 @@ class AnimatableData:
         pass
 
 
+class AnimatableSegmentData(AnimatableData):
+    def __init__(self, ax: plt.Axes, p1_data, p2_data, name: str, fix_scale: bool = True):
+        self.cur_line, = ax.plot([], [], 'r')
+
+        self.p1_data = np.array(p1_data)
+        self.p2_data = np.array(p2_data)
+
+        mnx = min(*self.p1_data[:, 0], *self.p2_data[:, 0])
+        mxx = max(*self.p1_data[:, 0], *self.p2_data[:, 0])
+        mny = min(*self.p1_data[:, 1], *self.p2_data[:, 1])
+        mxy = max(*self.p1_data[:, 1], *self.p2_data[:, 1])
+
+        ax.legend([name])
+        ax.set_xlim(mnx, mxx)
+        ax.set_ylim(mny, mxy)
+        if fix_scale:
+            x_range = mxx - mnx
+            y_range = mxy - mny
+            ax.set_box_aspect(y_range / x_range)
+
+    def set_num_frames(self, num_frames):
+        self.p1_data = np.concatenate([
+            interpolate(self.p1_data[:, 0], num_frames)[:, None],
+            interpolate(self.p1_data[:, 1], num_frames)[:, None]], axis=1)
+        self.p2_data = np.concatenate([
+            interpolate(self.p2_data[:, 0], num_frames)[:, None],
+            interpolate(self.p2_data[:, 1], num_frames)[:, None]], axis=1)
+
+    def set_frame(self, i):
+        self.cur_line.set_data([self.p1_data[i, 0], self.p2_data[i, 0]],
+                               [self.p1_data[i, 1], self.p2_data[i, 1]])
+        return self.cur_line,
+
+
 class AnimatablePointData(AnimatableData):
     def __init__(self, ax: plt.Axes, x_data, y_data, name: str, fix_scale: bool = True):
         self.hist_line, = ax.plot([], [], 'g-')
