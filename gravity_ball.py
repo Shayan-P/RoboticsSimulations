@@ -15,9 +15,8 @@ class GravityBall:
         self.g = g
         self.mass = mass
         self.gravity_center = np.array(gravity_center)
-        self.current_time = 0
 
-    def dstate_dt(self, state, t):
+    def dstate_dt(self, t, state):
         """derivative of state at time t"""
         X = state[0:2]
         dX = state[2:4]
@@ -30,5 +29,4 @@ class GravityBall:
         return self.state[0:2]
 
     def step(self, dt):
-        self.state = integrate.odeint(self.dstate_dt, self.state, [0, dt])[1]
-        self.current_time += dt
+        self.state = integrate.odeint(self.dstate_dt, self.state, [0, dt], tfirst=True)[1]
