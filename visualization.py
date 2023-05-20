@@ -71,11 +71,11 @@ class AnimatableLinePlot(AnimatableData):
 
 
 class Animator:
-    def __init__(self, fig, num_frames, total_time, animatable_datas: ["AnimatableData"]):
+    def __init__(self, fig, interval, total_time, animatable_datas: ["AnimatableData"], speed=1):
         self.fig = fig
         self.animatable_datas = animatable_datas
-        self.num_frames = num_frames
-        self.interval = total_time * 1000 / num_frames  # in ms
+        self.interval = interval
+        self.num_frames = round((total_time/speed) * 1000 / interval)
         for animatable in self.animatable_datas:
             animatable.set_num_frames(self.num_frames)
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                               plot_config="r-")
     obj2 = AnimatablePointData(ax, x_data=[4, 10, 1, 3, 2], y_data=[5, 1, 2, 4, 10], name="ball", fix_scale=True)
 
-    animator = Animator(fig=fig, num_frames=40, total_time=1, animatable_datas=[obj1])
+    animator = Animator(fig=fig, interval=30, total_time=1, animatable_datas=[obj1])
     anim = FuncAnimation(animator.fig,
                          animator.animate,
                          frames=animator.num_frames,
