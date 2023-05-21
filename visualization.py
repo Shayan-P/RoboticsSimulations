@@ -1,14 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.interpolate import interp1d
 
 from matplotlib.animation import FuncAnimation
 from abc import abstractmethod
 
 
 def interpolate(array, new_size):
-    return np.interp(np.linspace(0, 1, new_size),
-                     np.linspace(0, 1, len(array)),
-                     array)
+    func = interp1d(np.linspace(0, 1, len(array)), array, axis=0)
+    return func(np.linspace(0, 1, new_size))
 
 
 class AnimatableData:
@@ -19,6 +19,34 @@ class AnimatableData:
     @abstractmethod
     def set_num_frames(self, num_frames):
         pass
+
+
+class AnimatableKSegmentData(AnimatableData):
+    # list of history of coordinates
+    def __init__(self, ax: plt.Axes, points_data, name: str, fix_scale: bool = True):
+        self.cur_line, = ax.plot([], [], 'r')
+
+        self.points_data = np.array(points_data)
+
+        mnx = self.points_data[:, :, 0].min()
+        mxx = self.points_data[:, :, 0].max()
+        mny = self.points_data[:, :, 1].min()
+        mxy = self.points_data[:, :, 1].max()
+
+        ax.legend([name])
+        ax.set_xlim(mnx, mxx)
+        ax.set_ylim(mny, mxy)
+        if fix_scale:
+            x_range = mxx - mnx
+            y_range = mxy - mny
+            ax.set_box_aspect(y_range / x_range)
+
+    def set_num_frames(self, num_frames):
+        self.points_data = interpolate(self.points_data, num_frames)
+
+    def set_frame(self, i):
+        self.cur_line.set_data(*self.points_data[i].swapaxes(0, 1))
+        return self.cur_line,
 
 
 class AnimatableSegmentData(AnimatableData):
