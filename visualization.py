@@ -1,9 +1,14 @@
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import numpy as np
 from scipy.interpolate import interp1d
 
 from matplotlib.animation import FuncAnimation
 from abc import abstractmethod
+
+
+# matplotlib config
+mpl.rcParams['axes.formatter.useoffset'] = False
 
 
 def interpolate(array, new_size):
