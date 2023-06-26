@@ -1,4 +1,4 @@
-addpath('/home/shayan/Desktop/mit/robotics-urop-biomimic-lab/casadi-3.6.3-linux64-matlab2018b');
+addpath(genpath('../casadi'))
 
 import casadi.*
 
