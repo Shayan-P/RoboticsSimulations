@@ -43,10 +43,17 @@ function trajectory = find_trajectory(problem)
     opti.minimize(MXU);
     % 
     opti.solver('ipopt');
+
+
+
+    ts = linspace(0, T, N+1);
+    Xs_guess = interp1([0, T]', [init_X, final_X]', ts');
+    opti.set_initial(Xs, Xs_guess);
+
     opti.solve();
 
 
-    trajectory.t = linspace(0, T, N+1)';
+    trajectory.t = ts;
     trajectory.X = opti.value(Xs);
     trajectory.u = [0; opti.value(us)];
 end

@@ -5,7 +5,7 @@ import casadi.*
 problem.T = 2;
 problem.N = 160;
 problem.X0 = [0; pi; 0; 0];
-problem.Xt = [1; pi; 0; 0];
+problem.Xt = [1; 0; 0; 0];
 
 problem.cartpole.r = 0.2;
 problem.cartpole.m = 1;
