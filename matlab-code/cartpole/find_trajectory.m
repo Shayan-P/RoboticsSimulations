@@ -38,7 +38,8 @@ function trajectory = find_trajectory(problem)
     % you may have to remove this constraints for different tasks:
     % opti.subject_to(-pi/6 <= Xs <= pi/6);
     MXU = opti.variable();
-    opti.subject_to(-MXU <= us <= MXU);
+    opti.subject_to(-MXU <= us);
+    opti.subject_to(us <= MXU);
     opti.minimize(MXU);
     % 
     opti.solver('ipopt');
