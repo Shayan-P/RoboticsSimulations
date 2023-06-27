@@ -1,4 +1,11 @@
 function u_cor = lqr_balance_controller(t, X, cartpole)
+    import casadi.*
+
+    persistent F_Jac;   
+    if isempty(F_Jac)
+        F_Jac = casadi.Function.load('casadi_generated_functions/F_Jac.func');
+    end
+
     theta = mod(X(2), 2 * pi);
     if theta > pi
         theta = theta - 2 * pi;
@@ -9,21 +16,15 @@ function u_cor = lqr_balance_controller(t, X, cartpole)
     % normalize around a close balance:
     X0 = [X(1); 0; 0; 0];
 
-    % dX = subs(jacobian(F_, X_), X_, X0, u_, 0) * X + subs(jacobian(F_, u_), X_, X0, u_, 0) * u
-
-    X_ = sym('X', [4, 1]);
-    u_ = sym('u');
-    F_ = dynamics(X_, u_, cartpole);
-    Fx_ = jacobian(F_, X_);
-    Fu_ = jacobian(F_, u_);
-
-    A = double(subs(subs(Fx_, X_, X0), u_, 0));
-    B = double(subs(subs(Fu_, X_, X0), u_, 0));
+    params = [cartpole.m; cartpole.mc; cartpole.r; cartpole.g];
+    [A, B] = F_Jac(X0, 0, params);
+    A = full(A);
+    B = full(B);
 
     Q = diag([10, 3, 3, 3]);
     R = 1;
 
     K = lqr(A, B, Q, R);
 
-    u_cor = -K * X + randn() * 0.01;
+    u_cor = -K * X;
 end

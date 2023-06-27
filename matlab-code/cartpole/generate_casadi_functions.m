@@ -30,11 +30,13 @@ fcn_M = Function('M', {X, params}, {M}, {'X', 'p'}, {'M'});
 fcn_C = Function('C', {X, params}, {C}, {'X', 'p'}, {'C'});
 fcn_G = Function('G', {X, params}, {G}, {'X', 'p'}, {'G'});
 fcn_dynamics = Function('dynamics', {X, u, params}, {dX}, {'X', 'u', 'p'}, {'dX'});
+fcn_F_Jac = Function('FJac', {X, u, params}, {jacobian(dX, X), jacobian(dX, u)}, {'X', 'u', 'p'}, {'dFdX', 'dFdu'});
 
 save(fcn_M, 'casadi_generated_functions/M.func')
 save(fcn_C, 'casadi_generated_functions/C.func')
 save(fcn_G, 'casadi_generated_functions/G.func')
 save(fcn_dynamics, 'casadi_generated_functions/dynamics.func')
+save(fcn_F_Jac, 'casadi_generated_functions/F_Jac.func')
 
 % tau = Mddq + Cdq + G
 % ddq_X_u = @(X, u_var) pinv(M(X(2))) * ([u_var; 0.0] - C(X(4), X(2)) * reshape(X(3:4), (2, 1)) - G(X(2)))
