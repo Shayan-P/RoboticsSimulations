@@ -1,11 +1,10 @@
 function dX = dynamics(X, u, cartpole)
-    [p, theta, dp, dtheta] = deal(X(1), X(2), X(3), X(4));
-    q = [p; theta];
-    dq = [dp; dtheta];
-    p = [cartpole.m; cartpole.mc; cartpole.r; cartpole.g];
-    M = fcn_M(q, p);
-    C = fcn_C(q, dq, p);
-    G = fcn_G(q, p);
-    ddq = pinv(M) * ([u; 0] - C * dq - G);
-    dX = [dq; ddq];
+    import casadi.*;
+
+    persistent funcHandle;   
+    if isempty(funcHandle)
+        funcHandle = casadi.Function.load('casadi_generated_functions/dynamics.func');
+    end
+    params = [cartpole.m; cartpole.mc; cartpole.r; cartpole.g];
+    dX = funcHandle(X, u, params);
 end

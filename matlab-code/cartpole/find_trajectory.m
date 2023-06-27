@@ -15,9 +15,11 @@ function trajectory = find_trajectory(problem)
     %options.number_of_finite_elements = 1;
     %options.simplify = true;
     %options.tf = DT/options.number_of_finite_elements;
-
+    dynamicsFuncHandle = casadi.Function.load('casadi_generated_functions/dynamics.func');
+    dX = dynamicsFuncHandle(X, u, [cartpole.m; cartpole.mc; cartpole.r; cartpole.g]); % todo. don't load this all the time...
+    
     duration = MX.sym('duration');
-    intg = integrator('intg', 'rk', struct('x', X, 'ode', dynamics(X, u, cartpole) * duration, 'p', [u, duration]), struct('tf', 1));
+    intg = integrator('intg', 'rk', struct('x', X, 'ode', dX * duration, 'p', [u, duration]), struct('tf', 1));
     res = intg('x0',X,'p', [u, duration]);
     xf = full(res.xf);
     FT = Function('FT', {X, u, duration}, {xf});
