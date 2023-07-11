@@ -1,5 +1,7 @@
 addpath(genpath('../casadi'))
 
+import casadi.*;
+
 problem.T = 3;
 % problem.N = 160;
 problem.X0 = [0; pi * 0.3; 0; 0];

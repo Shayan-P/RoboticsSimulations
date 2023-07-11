@@ -18,14 +18,14 @@ load('pull_up_trajectory.mat')
 
 % show the result of optimizer
 figure(1);
-animate_cartpole(trajectory.t, trajectory.X, problem.cartpole);
+animate_cartpole(trajectory.t, trajectory.X, problem.cartpole, 0.5);
 
 % simulate with forward dynamics
 % controller = @(t, X) uout(max(find(tout <= t))); % don't care about X. its supposed to be calculated right
 my_controller = @(t, X) controller(trajectory, t, X, problem.cartpole);
 sim_trajectory = forward_simulate(my_controller, problem);
 figure(2);
-animate_cartpole(sim_trajectory.t, sim_trajectory.X, problem.cartpole);
+animate_cartpole(sim_trajectory.t, sim_trajectory.X, problem.cartpole, 0.5);
 
 % stats
 figure(3);
