@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/main.dir/main.o -o main   -L/usr/local/lib  -Wl,-rpath,/usr/local/lib /usr/local/lib/libcasadi.so.3.7 -lpinocchio -ldl 
