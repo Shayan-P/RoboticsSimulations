@@ -22,12 +22,17 @@ using namespace std;
 
 int main() {
   Model _model;
+  pinocchio::JointModelFreeFlyer root_joint;
+
   auto path = "../ANYmal.urdf";
-  pinocchio::urdf::buildModel(path, _model);
+  pinocchio::urdf::buildModel(path, root_joint, _model);
   auto model = _model.cast<Scalar>();
   cout << "model: " << model.name << endl;
   cout << "nq: " << model.nq << endl << "nv: " << model.nv << endl << "njoints: " << model.njoints << endl;
 
+  for(int i = 0; i < model.njoints; i++) {
+    cout << model.joints[i] << endl;
+  }
   pinocchio::DataTpl<Scalar> data(model);
  
   auto q = SX::sym("q", model.nq);
