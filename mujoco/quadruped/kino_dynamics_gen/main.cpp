@@ -38,6 +38,11 @@ int main() {
   rnea(model, data, cas_to_eig(q), cas_to_eig(dq), cas_to_eig(ddq));
   tau = eig_to_cas(data.tau);
 
-  Function f("dynamics", {q, dq, ddq}, {tau}, {"q", "dq", "ddq"}, {"tau"});
-  f.save("../casadi_functions/dynamics.func");
+  auto mass_matrix = eig_to_cas(crba(model, data, cas_to_eig(q)));
+
+  Function dynamics("dynamics", {q, dq, ddq}, {tau}, {"q", "dq", "ddq"}, {"tau"});
+  dynamics.save("../casadi_functions/dynamics.func");
+
+  Function M("M", {q}, {mass_matrix}, {"q"}, {"M"});
+  M.save("../casadi_functions/M.func");
 }

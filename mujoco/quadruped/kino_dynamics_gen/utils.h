@@ -27,6 +27,17 @@ casadi::SX eig_to_cas(const VectorXs & eig)
 
 }
 
+casadi::SX eig_to_cas(const MatrixXs & eig)
+{
+    auto sx = casadi::SX(casadi::Sparsity::dense(eig.rows(), eig.cols()));
+    for(int i = 0; i < eig.rows(); i++) {
+        for(int j = 0; j < eig.cols(); j++) {
+            sx(i, j) = eig(i, j);
+        }
+    }
+    return sx;
+}
+
 casadi::SX eigmat_to_cas(const MatrixXs & eig)
 {
     auto sx = casadi::SX(casadi::Sparsity::dense(eig.rows(), eig.cols()));
