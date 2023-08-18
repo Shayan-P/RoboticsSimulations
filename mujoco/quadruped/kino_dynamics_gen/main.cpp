@@ -24,7 +24,7 @@ int main() {
   Model _model;
   pinocchio::JointModelFreeFlyer root_joint;
 
-  auto path = "../ANYmal.urdf";
+  auto path = "../../unitree_a1/a1.urdf";
   pinocchio::urdf::buildModel(path, root_joint, _model);
   auto model = _model.cast<Scalar>();
   cout << "model: " << model.name << endl;
