@@ -1,3 +1,0 @@
-/home/shayan-pardis/sandbox/casadi-test/build/CMakeFiles/main.dir
-/home/shayan-pardis/sandbox/casadi-test/build/CMakeFiles/edit_cache.dir
-/home/shayan-pardis/sandbox/casadi-test/build/CMakeFiles/rebuild_cache.dir
