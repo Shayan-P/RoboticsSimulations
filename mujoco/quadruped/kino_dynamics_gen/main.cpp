@@ -22,10 +22,11 @@ using namespace std;
 
 int main() {
   Model _model;
-  pinocchio::JointModelFreeFlyer root_joint;
+  // pinocchio::JointModelFreeFlyer root_joint;
 
   auto path = "../../unitree_a1/a1.urdf";
-  pinocchio::urdf::buildModel(path, root_joint, _model);
+  // pinocchio::urdf::buildModel(path, root_joint, _model);
+  pinocchio::urdf::buildModel(path, _model);
   auto model = _model.cast<Scalar>();
   cout << "model: " << model.name << endl;
   cout << "nq: " << model.nq << endl << "nv: " << model.nv << endl << "njoints: " << model.njoints << endl;
