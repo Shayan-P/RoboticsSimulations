@@ -103,6 +103,8 @@
             <geom class="calf1"/>
             <geom class="calf2"/>
             <geom class="foot"/>
+            <site name="foot1" pos="0 0 -0.22" />
+            <!-- <geom type="sphere" pos="0 0 -0.22" size="0.001"/> -->
           </body>
         </body>
       </body>
@@ -129,6 +131,8 @@
             <geom class="calf1"/>
             <geom class="calf2"/>
             <geom class="foot"/>
+            <site name="foot2" pos="0 0 -0.22" />
+            <!-- <geom type="sphere" pos="0 0 -0.22" size="0.001"/> -->
           </body>
         </body>
       </body>
@@ -154,6 +158,8 @@
             <geom class="calf1"/>
             <geom class="calf2"/>
             <geom class="foot"/>
+            <site name="foot3" pos="0 0 -0.22" />
+            <!-- <geom type="sphere" pos="0 0 -0.22" size="0.001"/> -->
           </body>
         </body>
       </body>
@@ -179,6 +185,8 @@
             <geom class="calf1"/>
             <geom class="calf2"/>
             <geom class="foot"/>
+            <site name="foot4" pos="0 0 -0.22" />
+            <!-- <geom type="sphere" pos="0 0 -0.22" size="0.001"/> -->
           </body>
         </body>
       </body>
@@ -201,7 +209,9 @@
   </actuator>
 
   <keyframe>
-    <key name="home" qpos="0 0 0.27 1 0 0 0 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"
-      ctrl="0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"/>
+    <!-- <key name="home" qpos="0 0 0.27 1 0 0 0 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"
+      ctrl="0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8 0 0.9 -1.8"/> -->
+
+    <key name="home" qpos='0 0 .3 1 0 0 0 0 0.34054 -1.50393 0 0.34054 -1.49503 0 0.34054 -1.49503 0 0.31436 -1.50393'/>
   </keyframe>
 </mujoco>
